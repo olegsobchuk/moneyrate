@@ -1,0 +1,12 @@
+body {
+  font: 100% Helvetica, sans-serif;
+  color: #333;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
