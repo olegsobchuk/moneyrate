@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	controller "github.com/olegsobchuk/moneyrate/controllers"
+	controller "github.com/olegsobchuk/moneyrate/app/controllers"
 )
 
 // MakeRouter creates routes

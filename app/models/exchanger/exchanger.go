@@ -1,9 +1,11 @@
 package exchanger
 
+import "time"
+
 // Exchanger exchanger object
 type Exchanger struct {
-	Money  float32 `schema:"money"`
-	Date   string  `schema:"date"`
+	Money  float32   `schema:"money"`
+	Date   time.Time `schema:"date"`
 	Sum    float32
 	Errors map[string][]string
 }
