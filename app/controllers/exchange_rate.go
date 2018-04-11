@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"time"
 
@@ -35,9 +36,19 @@ func ExchangeFindRate(w http.ResponseWriter, r *http.Request) {
 	decoder := schema.NewDecoder()
 	decoder.RegisterConverter(time.Time{}, customConverter.StringToDate)
 	if err := decoder.Decode(&exchanger, r.Form); err != nil {
-		fmt.Println(err)
+		log.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("HTTP 500: Internal Server Error"))
+		return
 	}
-	rates := bankRate.GetRate("usd", exchanger.Date)
+	rates, err := bankRate.GetRate("usd", exchanger.Date)
+	if err != nil {
+		log.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("HTTP 500: Internal Server Error"))
+		return
+	}
+	fmt.Printf("%v", rates)
 	respondWithJSON(w, r, http.StatusCreated, rates)
 }
 
