@@ -16,8 +16,8 @@
 [[projects]]
   name = "github.com/gorilla/schema"
   packages = ["."]
-  revision = "b0e8c201c781a2ff27702d53885093aefb15b623"
-  version = "v1.0.1"
+  revision = "d0e4c24cff97ae983e9847e0ed5a02dc10013d41"
+  version = "v1.0.2"
 
 [solve-meta]
   analyzer-name = "dep"

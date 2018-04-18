@@ -4,16 +4,20 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/olegsobchuk/moneyrate/config/router"
 )
 
+// ServerPort port for server
+var ServerPort = os.Getenv("PORT")
+
 func run() error {
 	router := router.MakeRouter()
 	server := &http.Server{
 		Handler:      router,
-		Addr:         ":3001",
+		Addr:         ":" + ServerPort,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
@@ -26,6 +30,6 @@ func run() error {
 
 func main() {
 	fmt.Println("Start server...")
-	log.Println("Start server...")
+	log.Println("Start server. Port ", ServerPort)
 	log.Fatal(run())
 }
