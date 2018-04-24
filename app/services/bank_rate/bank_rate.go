@@ -28,7 +28,7 @@ func (rate *BankRate) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &aux); err != nil {
 		return err
 	}
-	rate.Date, _ = time.Parse("02.01.2006", aux.Date)
+	rate.Date, _ = time.Parse("2.1.2006", aux.Date)
 	return nil
 }
 
