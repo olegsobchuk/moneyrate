@@ -18,18 +18,35 @@ type BankRate struct {
 
 // UnmarshalJSON unmarshal Date
 func (rate *BankRate) UnmarshalJSON(data []byte) error {
-	type Alias BankRate
+	type RateAlias BankRate
 	aux := &struct {
 		Date string `json:"exchangedate"`
-		*Alias
+		*RateAlias
 	}{
-		Alias: (*Alias)(rate),
+		RateAlias: (*RateAlias)(rate),
 	}
 	if err := json.Unmarshal(data, &aux); err != nil {
 		return err
 	}
 	rate.Date, _ = time.Parse("2.1.2006", aux.Date)
 	return nil
+}
+
+// MarshalJSON marshal data
+func (rate *BankRate) MarshalJSON() ([]byte, error) {
+	type dupBankRate BankRate
+	basicRate := struct {
+		Date     string `json:"date"`
+		BankRate *dupBankRate
+	}{
+		BankRate: (*dupBankRate)(rate),
+		Date:     rate.Date.Format("02/01/2006"),
+	}
+	jsn, err := json.Marshal(basicRate)
+	if err != nil {
+		return []byte{}, err
+	}
+	return jsn, nil
 }
 
 // GetRate - send API request
